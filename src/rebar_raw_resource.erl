@@ -47,7 +47,7 @@
 % For development only - you *really* don't want this defined!
 %-define(RRR_DEBUG,  true).
 
--define(or_else,   'true').
+%%-define(else,   'true').
 -define(is_min_tuple(Var, Min),
     erlang:is_tuple(Var) andalso erlang:tuple_size(Var) >= Min).
 -define(is_rec_type(Var, Type, Min),
@@ -58,7 +58,7 @@
 -ifdef(RRR_DEBUG).
 -define(RRR_STATE(Field),   debug_state(State, Field)).
 -define(throw_error(Error), debug_call_stack(), erlang:error({?MODULE, Error})).
--or_else.
+-else.
 -define(RRR_STATE(Field),   'ok').
 -define(throw_error(Error), erlang:error({?MODULE, Error})).
 -endif.
@@ -122,7 +122,7 @@
 -type rsrc_loc()    ::  rebar_resource:location().
 -type rsrc_ref()    ::  rebar_resource:ref().
 -type rsrc_type()   ::  rebar_resource:type().
--or_else.
+-else.
 -type rebar_lock()  ::  {rsrc_type(), rsrc_loc(), rsrc_ref()}.
 -type rebar_state() ::  tuple().
 -type rsrc_loc()    ::  string().   % URL-ish
@@ -649,7 +649,7 @@ debug_call_stack() ->
 dump_mod_data(Data) ->
     Data.
 
--or_else.
+-else.
 
 debug_call_stack() ->
     {_, {_, [_ | Stack]}} = (catch erlang:error('ok')),
